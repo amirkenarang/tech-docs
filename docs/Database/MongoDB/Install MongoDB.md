@@ -14,13 +14,13 @@ To Run a database using this command:
 </aside>
 
 ```bash
-docker run --name <container-name> -d -p 27017:27017 -v /home/amir/data:/data/db <image-name> --restart unless-stopped
+docker run --name <container-name> -d -p 27017:27017 -v /home/user/data:/data/db <image-name> --restart unless-stopped
 
 # Example
-# docker run --name mongodb -d -p 27017:27017 -v /home/amir/data:/data/db mongo --restart unless-stopped
+docker run --name mongodb -d -p 27017:27017 -v /home/user/data:/data/db mongo --restart unless-stopped
 
-# or with a password
-# docker run --name mongo -d -p 27010:27017 --network mongo-network -v /home/user/mongo/data:/data/db -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=MongoAdmin2022Berlin mongo
+# Example: with a password
+docker run --name mongo -d -p 27010:27017 --network mongo-network -v /home/user/mongo/data:/data/db -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=mongo-password mongo
 ```
 
 Run the docker container again:
@@ -48,12 +48,12 @@ $ db.createUser({ user: "admin", pwd: "<password>", roles: [ { role: "userAdminA
 $  db.createUser({ user: "admin", pwd: "<password>", roles: [ { role: "root", db: "admin" }] })
 
 # or in other database (for example in ambit database):
-$ use ambit
-$ db.createUser({ user: "ambit", pwd: "<password>", roles: [ { role: "userAdmin", db: "ambit" } ] }
-$ db.grantRolesToUser("ambit",["readWrite"])
+$ use mydb
+$ db.createUser({ user: "mydb", pwd: "<password>", roles: [ { role: "userAdmin", db: "mydb" } ] }
+$ db.grantRolesToUser("mydb",["readWrite"])
 
 # Change password
-$ db.changeUserPassword('ambit', 'mongoAmbit2022Berlin')
+$ db.changeUserPassword('mydb', 'mydb-pass')
 
 # Create Collection
 $ db.createCollection
@@ -67,11 +67,11 @@ show dbs
 show users
 ```
 
-# ****MongoDB Cluster/Replica Set****
+# MongoDB Cluster/Replica Set
 
 MongoDB is a general-purpose database that was built with the web in mind. Amongst other things, it offers high availability when used in clusters, also called replica sets. A replica set is a group of MongoDB servers, called nodes, containing an identical copy of the data. If one of the servers fails, the other two will pick up the load while the crashed one restart.
 
-![Untitled](Install%20MongoDB%20717b5ee0470048199f100cfa123700b9/Untitled.png)
+![Untitled](images/mongodb1.png)
 
 ## Benefits of Docker Deployment
 
@@ -83,7 +83,7 @@ If you do not want to install MongoDB on your laptop, you can use Docker to run 
 
 Using Docker is an alternative way to get started with replica sets without a local installation of MongoDB. It is a convenient way to ensure that everyone on your team runs the same cluster configuration.
 
-# **Instructions**
+# Instructions
 
 The steps to create a docker cluster are as follows.
 
@@ -118,7 +118,7 @@ You are now ready to start your first container with MongoDB. To start the conta
 ```
 docker run -d --rm -p 27010:27017 --name mongo1 -v /home/user/mongo1:/data/db -v /home/user/mongo1/conf:/etc/mongod.conf --network mongo-network mongo mongod --replSet rs0 --bind_ip_all
 
-docker run -d -p 27010:27017 --name mongo1 -v /home/amir/data:/data/db mongo --restart unless-stopped
+docker run -d -p 27010:27017 --name mongo1 -v /home/user/data:/data/db mongo --restart unless-stopped
 ```
 
 In here, you tell docker to start a container with the following parameters:
@@ -196,7 +196,7 @@ docker exec -it mongo2 mongosh --eval "rs.status()"
 
 You will still see the replica set, but notice that the first member is now down, and one of the other two members has been [elected](https://docs.mongodb.com/manual/core/replica-set-elections/) as the primary node. If you start your container `mongo1` again, you will be able to see it back in the replica set, but as a secondary member.
 
-# **Next Steps**
+# Next Steps
 
 Now that you know what a MongoDB cluster is and how to create it on your personal computer using Docker, why not start a cluster on [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) for free? You can also learn more about basic MongoDB cluster management, including more on replica set management, by following the [m103](https://university.mongodb.com/courses/M103/about) course on MongoDB University.
 

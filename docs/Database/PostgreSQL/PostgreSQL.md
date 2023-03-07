@@ -1,6 +1,6 @@
 # PostgreSQL
 
-## ****How to Install and Setup PostgreSQL server on Ubuntu****
+## How to Install and Setup PostgreSQL server on Ubuntu
 
 First, you should install prerequisite software packages that will be used to download and install software certificates for a secure SSL connection.
 
@@ -26,13 +26,13 @@ sudo apt-get -y install postgresql
 sudo apt-get -y install postgresql-14
 ```
 
-****Check PostgreSQL status****
+## Check PostgreSQL status
 
 After the installation, you may double-check that the PostgreSQL daemon is active.
 
 `service postgresql status`
 
-![Untitled](PostgreSQL%20236110bd1f234692ae94d8deb8c29120/Untitled.png)
+![postgresql1](postgresql1.png)
 
 ### **Start Using the PostgreSQL Command Line Tool**
 
@@ -46,7 +46,7 @@ In addition to creating a postgres admin user for you, PostgreSQL installation a
 
 After first launching `psql`, you may check the details of your connection by typing `\conninfo` into the interpreter.
 
-![Untitled](PostgreSQL%20236110bd1f234692ae94d8deb8c29120/Untitled%201.png)
+![postgresql2](postgresql2.png)
 
 You are now connected to the database `postgres` as a user `postgres`.
 
@@ -74,9 +74,9 @@ And query the table to get all its rows.
 
 `SELECT * FROM clients;`
 
-![Untitled](PostgreSQL%20236110bd1f234692ae94d8deb8c29120/Untitled%202.png)
+![postgresql3](postgresql3.png)
 
-## **Setup PostgreSQL server**
+## Setup PostgreSQL server
 
 It’s fun to play with the database locally, but eventually, you will need to connect to it through a remote server.
 
@@ -93,7 +93,7 @@ Uncomment and edit the `listen_addresses` attribute to start listening to start 
 
 `listen_addresses = '*'`
 
-![Untitled](PostgreSQL%20236110bd1f234692ae94d8deb8c29120/Untitled%203.png)
+![postgresql4](postgresql4.png)
 
 Now edit the PostgreSQL access policy configuration file.
 
@@ -103,7 +103,7 @@ Append a new connection policy (a pattern stands for `[CONNECTION_TYPE][DATABAS
 
 `host all all 0.0.0.0/0 md5`
 
-![Untitled](PostgreSQL%20236110bd1f234692ae94d8deb8c29120/Untitled%204.png)
+![postgresql5](postgresql5.png)
 
 We are allowing TCP/IP connections (`host`) to all databases (`all`) for all users (`all`) with any IPv4 address (`0.0.0.0/0`) using an MD5 encrypted password for authentication (`md5`).
 
@@ -119,13 +119,13 @@ If everything is OK, you should see this output
 
 ## Important Queries:
 
-- **Get Database list:**
+- Get Database list:
 
-`\l`
+Whit this command: `\l`
 
 If you want to see a list of all the databases that are available on a server, use the `\l` command.
 
-![Untitled](PostgreSQL%20236110bd1f234692ae94d8deb8c29120/Untitled%205.png)
+![postgresql6](postgresql6.png)
 
 - **Create User:**
 
@@ -147,7 +147,7 @@ Since the default `postgres` user does not have a password, you should set it yo
 
 And to see a list of all the users with their privileges use the `\du` command.
 
-![Untitled](PostgreSQL%20236110bd1f234692ae94d8deb8c29120/Untitled%206.png)
+![postgresql7](postgresql7.png)
 
 - **Create Table**
 

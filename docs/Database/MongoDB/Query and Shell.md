@@ -27,7 +27,7 @@ db.answers.distinct( "questionnaireId" )
 
 ```bash
 # like query
-**{"email": {$regex : "samantest"} }**
+{"email": {$regex : "samantest"} }
 ```
 
 ```bash
